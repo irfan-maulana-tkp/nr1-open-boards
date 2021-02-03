@@ -1,3 +1,11 @@
+export const buildTimePickerOptions = () => {
+  return [1, 5, 10, 15].map(s => ({
+    key: s,
+    label: `Last ${s} minutes`,
+    value: `SINCE ${s} MINUTES AGO`,
+    text: `Last ${s} minutes`
+  }))
+}
 export const buildBoardOptions = boards => {
   const boardOptions = boards.map(a => ({
     key: a.id,

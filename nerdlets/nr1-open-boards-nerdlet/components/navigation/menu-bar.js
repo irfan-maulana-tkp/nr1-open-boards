@@ -6,7 +6,7 @@ import Select from 'react-select';
 import { DataConsumer } from '../../context/data';
 import { getUserCollection, getAccountCollection } from '../../lib/utils';
 import CreateBoard from '../boards/create';
-import { buildBoardOptions } from '../../context/utils';
+import { buildBoardOptions, buildTimePickerOptions } from '../../context/utils';
 import LockBoard from '../boards/lock';
 import DeleteBoard from '../boards/delete';
 import ExportBoard from '../boards/export';
@@ -23,6 +23,7 @@ import CreateEventTimelineWidget from '../widgets/create/event-timeline';
 import CreateMapboxWidget from '../widgets/create/mapbox';
 import ConfigSelector from './configuration-selector';
 import GeoMapsConfig from '../configuration/geomaps';
+import ManageBoardConfig from '../configuration/board-config';
 
 export default class MenuBar extends React.PureComponent {
   changeLocation = async (storageLocation, updateDataStateContext) => {
@@ -58,9 +59,12 @@ export default class MenuBar extends React.PureComponent {
           boards,
           selectedBoard,
           storageOptions,
+          customTimePicker,
           storageLocation,
           updateDataStateContext
         }) => {
+          const timePickerOptions = buildTimePickerOptions();
+
           return (
             <div>
               <div className="utility-bar">
@@ -111,6 +115,9 @@ export default class MenuBar extends React.PureComponent {
                     <CreateEventTimelineWidget />
                     <CreateMapboxWidget />
 
+                    <ManageBoardConfig 
+                      boardConfig={selectedBoard.document.config || {}}
+                    />
                     <ManageFilters
                       filters={selectedBoard.document.filters || []}
                     />
@@ -136,6 +143,17 @@ export default class MenuBar extends React.PureComponent {
                 ) : (
                   ''
                 )}
+                <div className="react-select-input-group">
+                  <label>Time Picker</label>
+                  <Select
+                    options={timePickerOptions}
+                    onChange={selectedTime => {
+                      updateDataStateContext({ customTimePicker: selectedTime, sinceClause: (selectedTime || {}).value || ''});
+                    }}
+                    value={customTimePicker}
+                    classNamePrefix="react-select"
+                  />
+                </div>
               </div>
             </div>
           );

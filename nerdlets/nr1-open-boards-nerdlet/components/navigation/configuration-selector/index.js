@@ -37,6 +37,7 @@ export default class ConfigSelector extends React.PureComponent {
 
   render() {
     const options = [
+      { value: 'boardConfig', label: 'Board Config'},
       { value: 'openFilters', label: 'Filters' },
       { value: 'openStyles', label: 'CSS Styles' },
       { value: 'openEventStreams', label: 'Event Streams' },

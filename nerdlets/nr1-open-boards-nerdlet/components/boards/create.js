@@ -48,12 +48,12 @@ export default class CreateBoard extends React.PureComponent {
       label: boardName,
       value: boardName,
       type: storageLocation,
-      document: boardConfig
+      document: {config: boardConfig}
     };
 
     switch (storeLocation) {
       case 'user': {
-        await writeUserDocument('OpenBoards', boardName, boardConfig);
+        await writeUserDocument('OpenBoards', boardName, {config: {boardConfig} });
         boards = await getUserCollection('OpenBoards');
         storageLocation = {
           key: 'User',
@@ -68,7 +68,7 @@ export default class CreateBoard extends React.PureComponent {
           selectedAccount.value,
           'OpenBoards',
           boardName,
-          boardConfig
+          {config: boardConfig}
         );
         boards = await getAccountCollection(
           selectedAccount.value,
@@ -220,7 +220,7 @@ export default class CreateBoard extends React.PureComponent {
                   <Checkbox
                     label="Auto"
                     checked={boardConfig.autoSize}
-                    onChange={(e => this.setState({ autoSize: !autoSize }))}
+                    onChange={(e => this.setState({ boardConfig: {...boardConfig, autoSize: !boardConfig.autoSize }}))}
                   />
                   <Form.Group>
                     <Form.Input

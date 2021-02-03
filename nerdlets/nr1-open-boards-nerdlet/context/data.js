@@ -60,6 +60,7 @@ export class DataProvider extends Component {
       end_time: 0,
       timeRange: null,
       sinceClause: '',
+      customTimePicker: '',
       urlStateChecked: false,
       initialized: false,
       openFilters: false,

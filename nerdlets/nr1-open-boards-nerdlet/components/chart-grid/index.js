@@ -31,7 +31,7 @@ export default class ChartGrid extends React.PureComponent {
   }, 500);
 
   render() {
-    const { height, width } = this.state;
+    // const { height, width } = this.state;
 
     return (
       <DataConsumer>
@@ -59,8 +59,16 @@ export default class ChartGrid extends React.PureComponent {
 
           if (selectedBoard) {
             const { document } = selectedBoard;
+            
             const dbFilters = document.filters || [];
             const filterClause = buildFilterClause(filters, dbFilters);
+            
+            let { height, width } = this.state;
+
+            if (document.config && document.config.autoSize !== undefined && document.config.autoSize === false ) {
+              height = document.config.height || height;  
+              width = document.config.width || width; 
+            }
 
             return (
               <Grid
